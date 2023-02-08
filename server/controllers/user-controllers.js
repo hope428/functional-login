@@ -5,7 +5,7 @@ module.exports = {
     const newUser = await User.create(body);
 
     if (!newUser) {
-      return res.status(400).json({ message: "Unable to create matchup" });
+      return res.status(400).json({ message: "Unable to create user" });
     }
 
     res.status(200).json(newUser);
