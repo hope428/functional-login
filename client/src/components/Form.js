@@ -1,10 +1,10 @@
 import React from "react";
-import { FormControl, InputLabel, Input, FormHelperText } from "@mui/material";
+import { FormControl, InputLabel, Input, FormHelperText, Container } from "@mui/material";
 
 export default function Form() {
 
   return (
-      <form>
+      <Container>
         <FormControl>
           <InputLabel htmlFor="email">Email address</InputLabel>
           <Input id="email" aria-describedby="my-helper-text" />
@@ -16,6 +16,6 @@ export default function Form() {
           <InputLabel htmlFor="password">Password</InputLabel>
           <Input id="password" type="password" />
         </FormControl>
-      </form>
+      </Container>
   );
 }
