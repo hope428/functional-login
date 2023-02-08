@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { addUser } from "../utils/api";
 import {
   FormControl,
   InputLabel,
@@ -12,12 +13,26 @@ export default function Form() {
   const [password, setPassword] = useState("");
   const [thankYou, setThankYou] = useState(false);
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
-    console.log(`Username: ${username}, Password: ${password}`);
-    setThankYou(true)
+
+    try {
+      const res = await addUser({ username, password });
+
+      if (!res.ok) {
+        throw new Error("something went wrong!");
+      }
+
+      const data = await res.json();
+    } catch (error) {
+      console.error(error);
+    }
+
+    setThankYou(true);
     setTimeout(() => {
-      setThankYou(false)
+      setUsername("");
+      setPassword("");
+      setThankYou(false);
     }, 3000);
   };
 
@@ -29,7 +44,11 @@ export default function Form() {
         <Container>
           <FormControl>
             <InputLabel htmlFor="email">Email address</InputLabel>
-            <Input id="email" onChange={(e) => setUsername(e.target.value)} />
+            <Input
+              id="email"
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+            />
             <FormHelperText id="my-helper-text">
               We'll never share your email.
             </FormHelperText>
@@ -39,6 +58,7 @@ export default function Form() {
             <Input
               id="password"
               type="password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </FormControl>
