@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Auth from '../utils/auth';
 import { addUser } from "../utils/api";
 import {
   FormControl,
@@ -24,7 +25,8 @@ export default function Form() {
       }
 
       const data = await res.json();
-      console.log(data);
+      Auth.login(data.token)
+
     } catch (error) {
       console.error(error);
     }
@@ -64,6 +66,7 @@ export default function Form() {
             />
           </FormControl>
           <button onClick={submitForm}>Sign up!</button>
+          <button onClick={() => Auth.logout()}>Logout</button>
         </Container>
       )}
     </>
