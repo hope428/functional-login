@@ -1,4 +1,5 @@
 const { User } = require("../models");
+const { signToken } = require('../utils/auth')
 
 module.exports = {
   async createUser({ body }, res) {
@@ -8,6 +9,7 @@ module.exports = {
       return res.status(400).json({ message: "Unable to create user" });
     }
 
-    res.status(200).json(newUser);
+    const token = signToken(newUser)
+    res.status(200).json({newUser, token});
   },
 };
